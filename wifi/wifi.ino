@@ -1,17 +1,47 @@
 #include <ESP8266WiFi.h> 
+#include <FS.h>
 
-const char* ssid = "***";
-const char* password = "***"; 
+const char* ssid;
+const char* password; 
 
 WiFiServer server(80);
 int status_LED = LOW; 
+
+void config_wifi(String path) {
+  String ssid_wifi = "";
+  String password_wifi = "";
+  int count = 0;
+  
+  File file = SPIFFS.open(path, "r");
+  
+  if (!file) {
+    Serial.println("Erro ao abrir arquivo!");
+  }
+  
+  while (file.available()) {
+    if (count == 0)
+      ssid_wifi = file.readStringUntil('\n'); //na primeira linha está o SSID
+    else
+      password_wifi = file.readStringUntil('\n'); //na segunda linha está a senha
+    count++;
+  }
+  file.close();
+  
+  ssid_wifi.trim(); //remove \n do final da string lida do arquivo
+  password_wifi.trim();//remove \n do final da string lida do arquivo
+  
+  ssid = ssid_wifi.c_str(); //conversão de string para const char
+  password = password_wifi.c_str(); //conversão de string para const char
+}
 
 void setup()
 {
   Serial.begin(115200); // Inicializa a serial
  
   Serial.println();   // Pula uma linha na janela da serial
-     
+
+  config_wifi("/wifi_credential.txt");
+  
   pinMode(2, OUTPUT);              
   digitalWrite(2, LOW);
   
