@@ -3,9 +3,11 @@
 #include <NTPClient.h>
 #include <WiFiUdp.h> 
 #include <FS.h>
+#include <string.h>
 #include "certificates.h"
 extern "C" {
-#include "libb64/cdecode.h"
+  #include "libb64/cdecode.h"
+  #include "user_interface.h"
 }
 
 const char* ssid;
@@ -16,6 +18,8 @@ long lastMsg = 0;
 char msg[50];  //buffer para conter a mensagem a ser publicada
 int count_send = 0;
 int timeZone = -3;
+int tick = 0;
+int timerValue = 1;
 
 //Socket UDP que a biblioteca utiliza para recuperar dados sobre o horário
 WiFiUDP ntpUDP;
@@ -30,7 +34,26 @@ NTPClient ntpClient(
 WiFiClientSecure espClient;
 
 /*WiFiServer server(80);*/
-int status_LED = LOW; 
+int status_LED = LOW;
+
+os_timer_t timer; // cria o temporizador
+bool tickTimer;
+
+String getValue(String data, char separator, int index)
+{
+    int found = 0;
+    int strIndex[] = { 0, -1 };
+    int maxIndex = data.length() - 1;
+
+    for (int i = 0; i <= maxIndex && found <= index; i++) {
+        if (data.charAt(i) == separator || i == maxIndex) {
+            found++;
+            strIndex[0] = strIndex[1] + 1;
+            strIndex[1] = (i == maxIndex) ? i+1 : i;
+        }
+    }
+    return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
+}
 
 void callback(char* topic, byte* payload, unsigned int length) 
 {
@@ -51,7 +74,13 @@ void callback(char* topic, byte* payload, unsigned int length)
     status_LED = LOW;    
   } else if (msg.equals("D")){
     status_LED = HIGH;    
+  } else if (msg.indexOf("timer/") != -1){
+    String val = getValue(msg, '/', 1);
+    timerValue = val.toInt();
+    Serial.println(val);
+    initTimer();
   }
+  
   digitalWrite(2, status_LED);
 }
 
@@ -148,6 +177,30 @@ void getDate()// Não está sendo usado ainda
     Serial.println(); 
 }
 
+void timerCallback(void *timing){
+  tick++;
+  Serial.println(tick);
+  
+  if(tick == timerValue && status_LED == HIGH){
+      status_LED = LOW;
+      digitalWrite(2, status_LED);
+      tick = 0;
+      os_timer_disarm(&timer);
+  } else if(tick == timerValue && status_LED == LOW){
+     status_LED = HIGH;
+     digitalWrite(2, status_LED);
+     tick = 0;
+     os_timer_disarm(&timer);
+  }
+
+  
+}
+
+void initTimer() {
+  os_timer_setfn(&timer,timerCallback , NULL);
+  os_timer_arm(&timer, 1000, true);
+}
+
 void setup()
 {
   Serial.begin(115200); // Inicializa a serial
@@ -231,13 +284,14 @@ void loop() {
   {
     lastMsg = now;
     count_send++;
+    
     //crie a mensagem a ser enviada
     if(status_LED == LOW)
     {
       snprintf (msg, 75, "{\"Message\": \"LIGADO\"}"); 
-      }else {
-        snprintf (msg, 75, "{\"Message\": \"DESLIGADO\"}"); 
-        }
+    }else {
+       snprintf (msg, 75, "{\"Message\": \"DESLIGADO\"}"); 
+    }
     //snprintf (msg, 75, "{\"Message\": \"Energy Consumption\",\"value\": %d}", count_send); 
     Serial.print("Publish message: ");
     Serial.println(msg);

@@ -1,6 +1,11 @@
 # Problema-2-SD
 
-## Diretorios
+## Diretorios e Arquivos
+
+### 1 - Web
+
+Contém a página html que será usada para as operações que controlam a placa NodeMCU ESP8266.
+
 ### 1 - libraries
 
 Contém as bibliotecas necessárias para executar o código no NodeMCU ESP8266.
@@ -9,7 +14,7 @@ Contém as bibliotecas necessárias para executar o código no NodeMCU ESP8266.
 	
 Usado para se conectar a um servidor de horário NTP para se mantenha sincronizado com o horário da rede.
 
-#### 1.2 - PubSubClient.zip
+#### 1.2 - PubSubClient.rar
 É uma biblioteca de cliente para mensagens MQTT.
 
 ### 2 - wifi 
