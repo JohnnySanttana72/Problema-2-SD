@@ -29,19 +29,30 @@ NTPClient ntpClient(
 
 WiFiClientSecure espClient;
 
-/*WiFiServer server(80);
-int status_LED = LOW; */
+/*WiFiServer server(80);*/
+int status_LED = LOW; 
 
 void callback(char* topic, byte* payload, unsigned int length) 
 {
+  String msg;
+  
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
   for (int i = 0; i < length; i++) 
   {
     Serial.print((char)payload[i]);
+    char c = (char)payload[i];
+    msg += c;
   }
   Serial.println();
+
+  if (msg.equals("L")){
+    status_LED = LOW;    
+  } else if (msg.equals("D")){
+    status_LED = HIGH;    
+  }
+  digitalWrite(2, status_LED);
 }
 
 PubSubClient client_pubsub(endpoint_aws, 8883, callback, espClient); //Começamos conectando a um número de porta MQTT de conjunto de rede WiFi para 8883 conforme padrão
@@ -221,14 +232,20 @@ void loop() {
     lastMsg = now;
     count_send++;
     //crie a mensagem a ser enviada
-    snprintf (msg, 75, "{\"Message\": \"Energy Consumption\",\"value\": %d}", count_send); 
+    if(status_LED == LOW)
+    {
+      snprintf (msg, 75, "{\"Message\": \"LIGADO\"}"); 
+      }else {
+        snprintf (msg, 75, "{\"Message\": \"DESLIGADO\"}"); 
+        }
+    //snprintf (msg, 75, "{\"Message\": \"Energy Consumption\",\"value\": %d}", count_send); 
     Serial.print("Publish message: ");
     Serial.println(msg);
   
     // publicar mensagens no tópico "outTopic"
     client_pubsub.publish("outTopic", msg);  
   }
-  
+}  
   /*WiFiClient client = server.available();  //Verifica se algum Cliente está conectado no Servidor   
   
   if (!client) {  // Se não existir Cliente conectado, faz
@@ -282,4 +299,3 @@ void loop() {
  delay(1); //Intervalo de 1 milisegundo 
  Serial.println(""); //Pula uma linha na janela serial
  */
-}
