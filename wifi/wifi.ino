@@ -48,9 +48,9 @@ void callback(char* topic, byte* payload, unsigned int length)
   Serial.println();
 
   if (msg.equals("L")){
-    status_LED = LOW;
+    status_LED = LOW;    
   } else if (msg.equals("D")){
-    status_LED = HIGH;
+    status_LED = HIGH;    
   }
   digitalWrite(2, status_LED);
 }
@@ -232,7 +232,13 @@ void loop() {
     lastMsg = now;
     count_send++;
     //crie a mensagem a ser enviada
-    snprintf (msg, 75, "{\"Message\": \"Energy Consumption\",\"value\": %d}", count_send); 
+    if(status_LED == LOW)
+    {
+      snprintf (msg, 75, "{\"Message\": \"LIGADO\"}"); 
+      }else {
+        snprintf (msg, 75, "{\"Message\": \"DESLIGADO\"}"); 
+        }
+    //snprintf (msg, 75, "{\"Message\": \"Energy Consumption\",\"value\": %d}", count_send); 
     Serial.print("Publish message: ");
     Serial.println(msg);
   
