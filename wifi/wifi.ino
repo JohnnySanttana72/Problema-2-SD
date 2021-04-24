@@ -1,7 +1,20 @@
+/************************************************************
+  Parte do código-fonte foi extraído e adaptado dos seguintes sites:
+  1 - Comunicação Mqtt aws iot: https://nerdyelectronics.com/iot/how-to-connect-nodemcu-to-aws-iot-core/;
+  2 - Definição dos certificados: https://savjee.be/2019/07/connect-esp32-to-aws-iot-with-arduino-code/;
+  3 - Configuração NTP: https://www.fernandok.com/2018/12/nao-perca-tempo-use-ntp.html.
+
+
+  Alunos: Johnny da Silva, Patrícia Carmona, Rafael Bito
+  Disciplina: TEC499 
+  Turma:TP02             
+
+***********************************************************/
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <NTPClient.h>
-#include <WiFiUdp.h> 
+#include <WiFiUdp.h>
+#include <ArduinoJson.h> 
 #include <FS.h>
 #include <string.h>
 #include "certificates.h"
@@ -12,14 +25,21 @@ extern "C" {
 
 const char* ssid;
 const char* password;
-const char* endpoint_aws = "seu-endpoint.iot.us-east-1.amazonaws.com"; // AWS Endpoint
+const char* endpoint_aws = "end_point.amazonaws.com"; // AWS Endpoint
 
 long lastMsg = 0;
-char msg[50];  //buffer para conter a mensagem a ser publicada
-int count_send = 0;
+char msg[256];  //buffer para conter a mensagem a ser publicada
+DynamicJsonDocument doc(1024); // cria um documento do formato json
 int timeZone = -3;
 int tick = 0;
 int timerValue = 1;
+int hour;
+int minute;
+int hora_on;
+int minuto_on;
+int hora_off;
+int minuto_off;
+
 
 //Socket UDP que a biblioteca utiliza para recuperar dados sobre o horário
 WiFiUDP ntpUDP;
@@ -57,31 +77,62 @@ String getValue(String data, char separator, int index)
 
 void callback(char* topic, byte* payload, unsigned int length) 
 {
+  StaticJsonDocument<256> doc;
   String msg;
   
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
+  
+  deserializeJson(doc, payload, length);
+  /*
   for (int i = 0; i < length; i++) 
   {
     Serial.print((char)payload[i]);
     char c = (char)payload[i];
     msg += c;
-  }
+  }*/
   Serial.println();
 
+  deserializeJson(doc, msg);
+  strlcpy(msg, doc["state"]["desired"]["status_LED"]);
+  Serial.print(test);
   if (msg.equals("L")){
-    status_LED = LOW;    
+    status_LED = LOW;  
+    digitalWrite(2, status_LED);  
   } else if (msg.equals("D")){
-    status_LED = HIGH;    
+    status_LED = HIGH;  
+    digitalWrite(2, status_LED);  
   } else if (msg.indexOf("timer/") != -1){
     String val = getValue(msg, '/', 1);
     timerValue = val.toInt();
     Serial.println(val);
     initTimer();
+  } else if(msg.indexOf("time/") != -1) {
+    String aux_hour = getValue(msg, '/', 1);
+    String aux_minute = getValue(msg, '/', 2);
+    hora_on = aux_hour.toInt();
+    minuto_on = aux_minute.toInt();
+
+    String aux_hour2 = getValue(msg, '/', 3);
+    String aux_minute2 = getValue(msg, '/', 4);
+    hora_off = aux_hour2.toInt();
+    minuto_off = aux_minute2.toInt();
+
+    Serial.print("Hora enviada Ligar ");
+    Serial.println(hora_on);
+
+    Serial.print("Minuto enviado Ligar ");
+    Serial.println(minuto_on);
+
+    Serial.print("Hora enviada Desligar ");
+    Serial.println(hora_off);
+
+    Serial.print("Minuto enviado Desligar ");
+    Serial.println(minuto_off);
   }
   
-  digitalWrite(2, status_LED);
+  
 }
 
 PubSubClient client_pubsub(endpoint_aws, 8883, callback, espClient); //Começamos conectando a um número de porta MQTT de conjunto de rede WiFi para 8883 conforme padrão
@@ -252,7 +303,7 @@ void reconnect()
       // Depois de conectado, publique uma aviso ...
       client_pubsub.publish("outTopic", "hello world");
       // ... e reinscrever
-      client_pubsub.subscribe("inTopic");
+      client_pubsub.subscribe("$aws/things/NodeMCU/shadow/update/documents");
     } 
     else
     {
@@ -283,21 +334,42 @@ void loop() {
   if (now-lastMsg > 5000) // se o tempo da mensagem atual menos o tempo da ultima mensagem ultrapassar os 5 segundos
   {
     lastMsg = now;
-    count_send++;
-    
+    //count_send++;
+    hour = ntpClient.getHours();
+    minute = ntpClient.getMinutes();
     //crie a mensagem a ser enviada
+    Serial.print("Hora ");
+    Serial.println(hour);
+
+    Serial.print("Minuto ");
+    Serial.println(minute);
+
+    if(hour == hora_on && minute == minuto_on) {
+      Serial.println("Entrei no If de ligar a LED ");
+      status_LED = LOW;
+      digitalWrite(2, status_LED);
+    } else if(hour == hora_off && minute == minuto_off) {
+      status_LED = HIGH;
+      digitalWrite(2, status_LED);
+    }
+    
     if(status_LED == LOW)
     {
-      snprintf (msg, 75, "{\"Message\": \"LIGADO\"}"); 
+      doc["state"]["reported"]["status_LED"] = "LIGADO";
+      doc["state"]["reported"]["OUTRA_COISA"] = 1;
+      //snprintf (msg, 75, "{\"Message\": \"LIGADO\"}"); 
     }else {
-       snprintf (msg, 75, "{\"Message\": \"DESLIGADO\"}"); 
+      doc["state"]["reported"]["status_LED"] = "DESLIGADO";
+      doc["state"]["reported"]["OUTRA_COISA"] = 2;
+       //snprintf (msg, 75, "{\"Message\": \"DESLIGADO\"}"); 
     }
+    serializeJson(doc, msg);
     //snprintf (msg, 75, "{\"Message\": \"Energy Consumption\",\"value\": %d}", count_send); 
     Serial.print("Publish message: ");
     Serial.println(msg);
   
     // publicar mensagens no tópico "outTopic"
-    client_pubsub.publish("outTopic", msg);  
+    client_pubsub.publish("$aws/things/NodeMCU/shadow/update", msg);  
   }
 }  
   /*WiFiClient client = server.available();  //Verifica se algum Cliente está conectado no Servidor   
