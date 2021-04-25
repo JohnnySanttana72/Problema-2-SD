@@ -25,7 +25,7 @@ extern "C" {
 
 const char* ssid;
 const char* password;
-const char* endpoint_aws = "end_point.amazonaws.com"; // AWS Endpoint
+const char* endpoint_aws = "a3b300y0i6kc5u-ats.iot.us-east-1.amazonaws.com"; // AWS Endpoint
 
 long lastMsg = 0;
 char msg[256];  //buffer para conter a mensagem a ser publicada
@@ -85,18 +85,18 @@ void callback(char* topic, byte* payload, unsigned int length)
   Serial.print("] ");
   
   deserializeJson(doc, payload, length);
-  /*
+  
   for (int i = 0; i < length; i++) 
   {
     Serial.print((char)payload[i]);
     char c = (char)payload[i];
     msg += c;
-  }*/
-  Serial.println();
+  }
+  Serial.println(msg);
 
-  deserializeJson(doc, msg);
-  strlcpy(msg, doc["state"]["desired"]["status_LED"]);
-  Serial.print(test);
+//  deserializeJson(doc, msg);
+//  strlcpy(msg, doc["state"]["desired"]["status_LED"]);
+//  Serial.print(test);
   if (msg.equals("L")){
     status_LED = LOW;  
     digitalWrite(2, status_LED);  
@@ -303,7 +303,7 @@ void reconnect()
       // Depois de conectado, publique uma aviso ...
       client_pubsub.publish("outTopic", "hello world");
       // ... e reinscrever
-      client_pubsub.subscribe("$aws/things/NodeMCU/shadow/update/documents");
+      client_pubsub.subscribe("$aws/things/NodeMCU/shadow/update/accepted");
     } 
     else
     {

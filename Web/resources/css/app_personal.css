@@ -1,0 +1,10 @@
+.brand-image-test {
+  float: left;
+  line-height: .8;
+  margin-left: -.2rem;
+  margin-right: .5rem;
+  margin-top: 4px;
+  max-height: 29px;
+  width: auto;
+  filter: brightness(700.0);
+}

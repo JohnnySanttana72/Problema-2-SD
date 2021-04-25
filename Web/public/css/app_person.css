@@ -1,0 +1,150 @@
+.brand-image-test {
+  float: left;
+  line-height: .8;
+  margin-left: -.2rem;
+  margin-right: .5rem;
+  margin-top: 4px;
+  max-height: 29px;
+  width: auto;
+  filter: brightness(700.0);
+}
+
+.action-btns {
+  margin-bottom: 1rem;
+  margin-right: 0.7rem;
+  width: 5.5rem;
+}
+
+.thumbnail-wrapper .btn-group{
+    display: none;
+}
+
+.thumbnail-wrapper {
+    display:inline-block;
+    position:relative;
+}
+
+.thumbnail-wrapper:hover .btn-group {
+  display:inline-flex;
+    position:absolute;
+    top:78%;
+    left:50%;
+    -webkit-transform:translate3d(-50%, -50%, 0);
+    -moz-transform:translate3d(-50%, -50%, 0);
+    transform:translate3d(-50%, -50%, 0);
+}
+
+.thumbnail-wrapper .btn-group .btn {
+  border-radius: 0px;
+}
+
+#image-cover{
+  vertical-align: middle;
+  text-align: center;
+  vertical-align: middle;
+
+}
+
+
+@media (min-width: 1043px) and (max-width: 1200px) {
+  .thumbnail-wrapper .btn-group {
+    top:70%;
+  }
+}
+
+@media (min-width: 1012px) and (max-width: 1042px) {
+  .thumbnail-wrapper .btn-group {
+    top:70%;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1012px) {
+  .thumbnail-wrapper .btn-group {
+    top:74%;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1000px) {
+  .thumbnail-wrapper .btn-group {
+    top:70%;
+  }
+}
+
+@media only screen and (max-width: 790px) {
+  .thumbnail-wrapper .btn-group {
+    top:66%;
+    width: 95%;
+  }
+
+  .btn-group button i{
+    font-size: 11px;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width:618px) {
+ 
+
+  .thumbnail-wrapper .btn-group {
+    top:64%;
+    width: 80%;
+    height: auto;
+  }
+
+  .btn-group button i{
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .btn-group button{
+    width: 8%;
+    height: auto;
+  }
+}
+
+@media only screen and (max-width:600px) {
+ 
+
+  .thumbnail-wrapper .btn-group {
+    top:61%;
+    width: 80%;
+    height: auto;
+  }
+
+  .btn-group button i{
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .btn-group button{
+    width: 8%;
+    height: auto;
+  }
+}
+
+@media (min-width: 300px) and (max-width: 570) {
+ 
+
+  .thumbnail-wrapper .btn-group {
+    top:58%;
+    width: 80%;
+    height: auto;
+  }
+
+  .btn-group button i{
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .btn-group button{
+    width: 8%;
+    height: auto;
+  }
+}
+
+.remove {
+  position:absolute!important;
+  top:-60px; 
+  right:10px;
+
+}

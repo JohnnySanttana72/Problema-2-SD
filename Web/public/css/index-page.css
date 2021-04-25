@@ -1,0 +1,474 @@
+/* Header Section */
+
+.navbar-custom {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    color: #606060;
+}
+
+.carousel-control-prev-icon {
+    background-image: none;
+}
+
+.carousel-control-next-icon {
+    background-image: none;
+}
+
+.chevron-circle {
+    font-size: 50px;
+    color: #606060;
+}
+
+/* Section search */
+
+.find-business {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.search-region-and-status {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #606060;
+    text-align: left;
+}
+
+.button-dropdown-one {
+    width: 90%;
+    background-color: #ffffff;
+    border-radius: 100px;
+    
+}
+
+.button-dropdown-two {
+    width: 100%;
+    border-radius: 100px;
+    background-color: #ffffff;
+}
+
+.button-drop-one {
+    background-color: #ffffff;
+}
+
+.button-drop-two {
+    background-color: #ffffff;
+}
+
+.icon-drop {
+    color: #606060;
+}
+
+.button-send {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    text-align: center;
+    width: 150px;
+    color: #282c28;
+    background-color: #ffab17;
+}
+
+/* Secction Descrição */
+
+.title-section-descr {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    color: #000000;
+    text-align: center;
+}
+
+.description-business {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #000000;
+    text-align: center;
+}
+
+.dimension-img-slide{
+    width: 250px;
+    height: 250px;
+}
+
+/* Section-Four / Contato Vendedor */
+
+.title-section-four {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 22px;
+    text-align: right;
+    color: #282c28;
+}
+
+.subtitle-section-four {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 14px;
+    text-align: right;
+    line-height: 15px;
+    color: #282c28;
+}
+
+.placeh-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 12px;
+}
+
+.input-form {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 16px;
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+    color: #606060;
+}
+
+.button-form-contact {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 15px;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    color: #ffab17;
+    background-color: #282c28;
+}
+
+.arrow-btn-send {
+    color: #ffab17;
+    font-size: 15px;
+}
+
+/* Section Sobre Elo */
+
+.title-know-more {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 36px;
+    color: #000000;
+}
+
+.description-know-more {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    color: #000000;
+}
+
+.button-like-know-more {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #282c28;
+    background-color: #ffab17;
+    border-radius: 100px;
+}
+
+.img-points-fluid{
+    max-width: 100%;
+    height: auto;
+}
+
+/* Section Dúvidas */
+
+.title-faq {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    color: #000000;
+    text-align: center;
+}
+
+.title-questions {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    color: #282c28;
+}
+
+.asnwer-questions {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #282c28;
+}
+
+.card-style-layer {
+    border: 4px solid #282c28;
+    background-color: transparent;
+    border-radius: 0px;
+}
+
+.card-style-header {
+    background-color: transparent;
+}
+
+.btn-see-more {
+    border: 4px solid #282c28;
+    border-radius: 100px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.title-map-guide {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    text-align: center;
+    color: #000000;
+}
+
+/* Section Mapa Elo */
+
+
+
+
+
+/* Section Formulário e Outros Contatos */
+
+.title-form-contact {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 38px;
+    color: #2a2a2a;
+    line-height: 43.65px;
+}
+
+.subtitle-form-contact {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    color: #2a2a2a;
+    line-height: 21.05px;
+}
+
+.placeh-form-contact {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    color: #838286;
+}
+
+.button-form-contact-send {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #ffab17;
+    border-radius: 5.6px;
+    width: 35%;
+}
+
+/* Outros Contatos */
+
+.title-other-contacts {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 35px;
+    color: #ffffff;
+    line-height: 26.98pt;
+}
+
+.box-form{
+    -webkit-box-shadow: 2px 5px 15px 5px #000000; 
+    box-shadow: 2px 5px 15px 5px #000000;
+}
+
+.subtitle-other-contacts {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: #ffffff;
+    line-height: 21.99pt;
+}
+
+.ddd-localization {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    color: #ffffff;
+}
+
+.other-media-social {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: #ffffff;
+}
+
+/* Footer Section */
+
+.items-footer li a{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #282c28!important;
+}
+
+.copyright{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.btn-rounded {
+    border-radius: 100px;
+}
+
+.bg-sections-contact {
+    background-color: #ffab17;
+}
+
+.logo-elo-footer{
+    width: 170px;
+    height:75px;
+}
+
+.load-container {
+    visibility: hidden;
+    display:none;
+}
+
+.loader {
+  margin: 40px auto;
+  font-size: 10px;
+  width: 1.4em;
+  height: 1.4em;
+  border-radius: 50%;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-animation: load5 1.1s infinite ease;
+  animation: load5 1.1s infinite ease;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.load-input {
+    visibility: hidden;
+    display:none;
+}
+
+.loader-speak {
+  margin: 17px auto;
+  font-size: 3px;
+  width: 1.4em;
+  height: 1.4em;
+  border-radius: 50%;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-animation: load5 1.1s infinite ease;
+  animation: load5 1.1s infinite ease;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.load-content{
+    visibility: hidden;
+    display:none;
+}
+
+.loader-contact{
+  margin: 16px auto;
+  font-size: 4px;
+  width: 1.4em;
+  height: 1.4em;
+  border-radius: 50%;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-animation: load5 1.1s infinite ease;
+  animation: load5 1.1s infinite ease;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+@media(max-width: 1440px) {
+    .new-padding-top {
+        padding-top: 7rem;
+    }
+}
+
+@media(min-width: 768px) {
+    .new-padding-top {
+        padding-top: 7.5rem;
+    }
+}
+
+@media(max-width: 576px) {
+    .new-padding-top {
+        padding-top: 7rem;
+    }
+}
+
+@-webkit-keyframes load5 {
+  0%,
+  100% {
+    box-shadow: 0em -2.6em 0em 0em #040204, 1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2), 2.5em 0em 0 0em rgba(33, 37, 41, 0.2), 1.75em 1.75em 0 0em rgba(33, 37, 41, 0.2), 0em 2.5em 0 0em rgba(33, 37, 41, 0.2), -1.8em 1.8em 0 0em rgba(33, 37, 41, 0.2), -2.6em 0em 0 0em rgba(33, 37, 41, 0.5), -1.8em -1.8em 0 0em rgba(33, 37, 41, 0.7);
+  }
+  12.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(33, 37, 41, 0.7), 1.8em -1.8em 0 0em #040204, 2.5em 0em 0 0em rgba(33, 37, 41, 0.2), 1.75em 1.75em 0 0em rgba(33, 37, 41, 0.2), 0em 2.5em 0 0em rgba(33, 37, 41, 0.2), -1.8em 1.8em 0 0em rgba(33, 37, 41, 0.2), -2.6em 0em 0 0em rgba(33, 37, 41, 0.2), -1.8em -1.8em 0 0em rgba(33, 37, 41, 0.5);
+  }
+  25% {
+    box-shadow: 0em -2.6em 0em 0em rgba(33, 37, 41, 0.5), 1.8em -1.8em 0 0em rgba(33, 37, 41, 0.7), 2.5em 0em 0 0em #040204, 1.75em 1.75em 0 0em rgba(33, 37, 41, 0.2), 0em 2.5em 0 0em rgba(33, 37, 41, 0.2), -1.8em 1.8em 0 0em rgba(33, 37, 41, 0.2), -2.6em 0em 0 0em rgba(33, 37, 41, 0.2), -1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2);
+  }
+  37.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(33, 37, 41, 0.2), 1.8em -1.8em 0 0em rgba(33, 37, 41, 0.5), 2.5em 0em 0 0em rgba(33, 37, 41, 0.7), 1.75em 1.75em 0 0em #040204, 0em 2.5em 0 0em rgba(33, 37, 41, 0.2), -1.8em 1.8em 0 0em rgba(33, 37, 41, 0.2), -2.6em 0em 0 0em rgba(33, 37, 41, 0.2), -1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2);
+  }
+  50% {
+    box-shadow: 0em -2.6em 0em 0em rgba(33, 37, 41, 0.2), 1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2), 2.5em 0em 0 0em rgba(33, 37, 41, 0.5), 1.75em 1.75em 0 0em rgba(33, 37, 41, 0.7), 0em 2.5em 0 0em #040204, -1.8em 1.8em 0 0em rgba(33, 37, 41, 0.2), -2.6em 0em 0 0em rgba(33, 37, 41, 0.2), -1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2);
+  }
+  62.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(33, 37, 41, 0.2), 1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2), 2.5em 0em 0 0em rgba(33, 37, 41, 0.2), 1.75em 1.75em 0 0em rgba(33, 37, 41, 0.5), 0em 2.5em 0 0em rgba(33, 37, 41, 0.7), -1.8em 1.8em 0 0em #040204, -2.6em 0em 0 0em rgba(33, 37, 41, 0.2), -1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2);
+  }
+  75% {
+    box-shadow: 0em -2.6em 0em 0em rgba(33, 37, 41, 0.2), 1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2), 2.5em 0em 0 0em rgba(33, 37, 41, 0.2), 1.75em 1.75em 0 0em rgba(33, 37, 41, 0.2), 0em 2.5em 0 0em rgba(33, 37, 41, 0.5), -1.8em 1.8em 0 0em rgba(33, 37, 41, 0.7), -2.6em 0em 0 0em #040204, -1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2);
+  }
+  87.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(33, 37, 41, 0.2), 1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2), 2.5em 0em 0 0em rgba(33, 37, 41, 0.2), 1.75em 1.75em 0 0em rgba(33, 37, 41, 0.2), 0em 2.5em 0 0em rgba(33, 37, 41, 0.2), -1.8em 1.8em 0 0em rgba(33, 37, 41, 0.5), -2.6em 0em 0 0em rgba(33, 37, 41, 0.7), -1.8em -1.8em 0 0em #ffffff;
+  }
+}
+@keyframes load5 {
+  0%,
+  100% {
+    box-shadow: 0em -2.6em 0em 0em #040204, 1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2), 2.5em 0em 0 0em rgba(33, 37, 41, 0.2), 1.75em 1.75em 0 0em rgba(33, 37, 41, 0.2), 0em 2.5em 0 0em rgba(33, 37, 41, 0.2), -1.8em 1.8em 0 0em rgba(33, 37, 41, 0.2), -2.6em 0em 0 0em rgba(33, 37, 41, 0.5), -1.8em -1.8em 0 0em rgba(33, 37, 41, 0.7);
+  }
+  12.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(33, 37, 41, 0.7), 1.8em -1.8em 0 0em #040204, 2.5em 0em 0 0em rgba(33, 37, 41, 0.2), 1.75em 1.75em 0 0em rgba(33, 37, 41, 0.2), 0em 2.5em 0 0em rgba(33, 37, 41, 0.2), -1.8em 1.8em 0 0em rgba(33, 37, 41, 0.2), -2.6em 0em 0 0em rgba(33, 37, 41, 0.2), -1.8em -1.8em 0 0em rgba(33, 37, 41, 0.5);
+  }
+  25% {
+    box-shadow: 0em -2.6em 0em 0em rgba(33, 37, 41, 0.5), 1.8em -1.8em 0 0em rgba(33, 37, 41, 0.7), 2.5em 0em 0 0em #040204, 1.75em 1.75em 0 0em rgba(33, 37, 41, 0.2), 0em 2.5em 0 0em rgba(33, 37, 41, 0.2), -1.8em 1.8em 0 0em rgba(33, 37, 41, 0.2), -2.6em 0em 0 0em rgba(33, 37, 41, 0.2), -1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2);
+  }
+  37.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(33, 37, 41, 0.2), 1.8em -1.8em 0 0em rgba(33, 37, 41, 0.5), 2.5em 0em 0 0em rgba(33, 37, 41, 0.7), 1.75em 1.75em 0 0em #040204, 0em 2.5em 0 0em rgba(33, 37, 41, 0.2), -1.8em 1.8em 0 0em rgba(33, 37, 41, 0.2), -2.6em 0em 0 0em rgba(33, 37, 41, 0.2), -1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2);
+  }
+  50% {
+    box-shadow: 0em -2.6em 0em 0em rgba(33, 37, 41, 0.2), 1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2), 2.5em 0em 0 0em rgba(33, 37, 41, 0.5), 1.75em 1.75em 0 0em rgba(33, 37, 41, 0.7), 0em 2.5em 0 0em #040204, -1.8em 1.8em 0 0em rgba(33, 37, 41, 0.2), -2.6em 0em 0 0em rgba(33, 37, 41, 0.2), -1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2);
+  }
+  62.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(33, 37, 41, 0.2), 1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2), 2.5em 0em 0 0em rgba(33, 37, 41, 0.2), 1.75em 1.75em 0 0em rgba(33, 37, 41, 0.5), 0em 2.5em 0 0em rgba(33, 37, 41, 0.7), -1.8em 1.8em 0 0em #040204, -2.6em 0em 0 0em rgba(33, 37, 41, 0.2), -1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2);
+  }
+  75% {
+    box-shadow: 0em -2.6em 0em 0em rgba(33, 37, 41, 0.2), 1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2), 2.5em 0em 0 0em rgba(33, 37, 41, 0.2), 1.75em 1.75em 0 0em rgba(33, 37, 41, 0.2), 0em 2.5em 0 0em rgba(33, 37, 41, 0.5), -1.8em 1.8em 0 0em rgba(33, 37, 41, 0.7), -2.6em 0em 0 0em #040204, -1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2);
+  }
+  87.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(33, 37, 41, 0.2), 1.8em -1.8em 0 0em rgba(33, 37, 41, 0.2), 2.5em 0em 0 0em rgba(33, 37, 41, 0.2), 1.75em 1.75em 0 0em rgba(33, 37, 41, 0.2), 0em 2.5em 0 0em rgba(33, 37, 41, 0.2), -1.8em 1.8em 0 0em rgba(33, 37, 41, 0.5), -2.6em 0em 0 0em rgba(33, 37, 41, 0.7), -1.8em -1.8em 0 0em #040204;
+  }
+}
+
+.decorate-text-none {
+    text-decoration: none!important;
+}
