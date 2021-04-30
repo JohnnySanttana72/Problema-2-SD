@@ -217,11 +217,11 @@
             cache: false,
             success: function (res) {
                 console.log(res);
-                if (res.state.reported.status_LED === "LIGADO") {
-                    //On
-                } else if (res.state.reported.status_LED === "DESLIGADO") {
-                    //OFF
-                } 
+                // if (res.state.reported.status_LED === "LIGADO") {
+                //     //On
+                // } else if (res.state.reported.status_LED === "DESLIGADO") {
+                //     //OFF
+                // } 
 
                 //Colocar tempo de consumo aqui
                 setTimeout(function () {

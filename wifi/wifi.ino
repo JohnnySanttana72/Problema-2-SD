@@ -77,39 +77,56 @@ String getValue(String data, char separator, int index)
 
 void callback(char* topic, byte* payload, unsigned int length) 
 {
-  StaticJsonDocument<256> doc;
-  String msg;
+  //doc["state"]["desired"]["status_LED"] = "L";
+  
+  //char* json = "{\"state\": {\"desired\": {\"status_LED\": \"D\"}}}";
+  //char json[256];
+  //serializeJson(doc, json);
+  StaticJsonDocument<256> docs;
+  deserializeJson(docs, payload, length);
+ 
+  Serial.println(msg);
   
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
-  
-  deserializeJson(doc, payload, length);
-  
-  for (int i = 0; i < length; i++) 
-  {
-    Serial.print((char)payload[i]);
-    char c = (char)payload[i];
-    msg += c;
-  }
-  Serial.println(msg);
 
-//  deserializeJson(doc, msg);
-//  strlcpy(msg, doc["state"]["desired"]["status_LED"]);
-//  Serial.print(test);
-  if (msg.equals("L")){
-    status_LED = LOW;  
-    digitalWrite(2, status_LED);  
-  } else if (msg.equals("D")){
-    status_LED = HIGH;  
-    digitalWrite(2, status_LED);  
-  } else if (msg.indexOf("timer/") != -1){
+ /*for (int i = 0; i < length; i++) 
+  {
+    Serial.println((char)payload[i]);
+    char c = (char)payload[i];
+    //msg += c;
+  }*/
+  String msg = docs["state"]["desired"]["status_LED"]; 
+  String led_status = docs["state"]["desired"]["time"][0]["status_LED"];
+  String hora_on = docs["state"]["desired"]["time"][0]["hour"];
+  String minuto_on = docs["state"]["desired"]["time"][0]["minute"];
+  
+  Serial.println(led_status);
+  Serial.println(hora_on);
+  Serial.println(minuto_on);
+  
+  if (msg != NULL){
+    
+    if (msg.equals("L")){
+      status_LED = LOW;  
+      digitalWrite(2, status_LED);  
+    } else if (msg.equals("D")){
+      status_LED = HIGH;  
+      digitalWrite(2, status_LED);  
+    }
+  } 
+  
+  /*else if (msg.indexOf("timer/") != -1){
     String val = getValue(msg, '/', 1);
     timerValue = val.toInt();
     Serial.println(val);
     initTimer();
-  } else if(msg.indexOf("time/") != -1) {
-    String aux_hour = getValue(msg, '/', 1);
+  }*/ else if(led_status != NULL) {
+    /*char* json = docs["state"]["desired"]["time"];*/
+    Serial.println("Entrou");
+    
+    /*String aux_hour = getValue(msg, '/', 1);
     String aux_minute = getValue(msg, '/', 2);
     hora_on = aux_hour.toInt();
     minuto_on = aux_minute.toInt();
@@ -129,7 +146,7 @@ void callback(char* topic, byte* payload, unsigned int length)
     Serial.println(hora_off);
 
     Serial.print("Minuto enviado Desligar ");
-    Serial.println(minuto_off);
+    Serial.println(minuto_off);*/
   }
   
   
@@ -323,6 +340,7 @@ void reconnect()
 }
 
 void loop() {
+  
 
   if (!client_pubsub.connected()) // Se não houver a conexão
   {
@@ -356,11 +374,9 @@ void loop() {
     if(status_LED == LOW)
     {
       doc["state"]["reported"]["status_LED"] = "LIGADO";
-      doc["state"]["reported"]["OUTRA_COISA"] = 1;
       //snprintf (msg, 75, "{\"Message\": \"LIGADO\"}"); 
     }else {
       doc["state"]["reported"]["status_LED"] = "DESLIGADO";
-      doc["state"]["reported"]["OUTRA_COISA"] = 2;
        //snprintf (msg, 75, "{\"Message\": \"DESLIGADO\"}"); 
     }
     serializeJson(doc, msg);
