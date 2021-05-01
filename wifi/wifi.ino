@@ -105,8 +105,8 @@ void callback(char* topic, byte* payload, unsigned int length)
   String timer_status_LED = docs["state"]["desired"]["timer"]["status_LED"];
 
   Serial.println(timer_status_LED);
-  //Serial.println(hora_on);
-  //Serial.println(minuto_on);
+  Serial.println(hora_on);
+  Serial.println(minuto_on);
   
   if (msg != NULL){
     
@@ -171,7 +171,7 @@ void callback(char* topic, byte* payload, unsigned int length)
   
 }
 
-PubSubClient client_pubsub(endpoint_aws, 8883, callback, espClient); //Começamos conectando a um número de porta MQTT de conjunto de rede WiFi para 8883 conforme padrão
+PubSubClient client_pubsub(endpoint_aws, 8883, callback, espClient); //Começamos conectando a um número de porta MQTT 8883 conforme padrão
 
 void config_wifi(String path) 
 {
