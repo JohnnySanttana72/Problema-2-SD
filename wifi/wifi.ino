@@ -5,7 +5,7 @@
   3 - Configuração NTP: https://www.fernandok.com/2018/12/nao-perca-tempo-use-ntp.html.
 
 
-  Alunos: Johnny da Silva, Patrícia Carmona, Rafael Bito
+  Alunos: Johnny da Silva, Patrícia Carmona, Rafael Brito
   Disciplina: TEC499 
   Turma:TP02             
 
@@ -37,8 +37,8 @@ int hour;
 int minute;
 int hora_on;
 int minuto_on;
-int hora_off;
-int minuto_off;
+char daysOfTheWeek[7][12] = {"Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sabado"};
+
 
 
 //Socket UDP que a biblioteca utiliza para recuperar dados sobre o horário
@@ -55,6 +55,7 @@ WiFiClientSecure espClient;
 
 /*WiFiServer server(80);*/
 int status_LED = LOW;
+int status_aux_LED = LOW;
 
 os_timer_t timer; // cria o temporizador
 bool tickTimer;
@@ -99,12 +100,13 @@ void callback(char* topic, byte* payload, unsigned int length)
   }*/
   String msg = docs["state"]["desired"]["status_LED"]; 
   String led_status = docs["state"]["desired"]["time"][0]["status_LED"];
-  String hora_on = docs["state"]["desired"]["time"][0]["hour"];
-  String minuto_on = docs["state"]["desired"]["time"][0]["minute"];
-  
-  Serial.println(led_status);
-  Serial.println(hora_on);
-  Serial.println(minuto_on);
+  hora_on = docs["state"]["desired"]["time"][0]["hour"];
+  minuto_on = docs["state"]["desired"]["time"][0]["minute"];
+  String timer_status_LED = docs["state"]["desired"]["timer"]["status_LED"];
+
+  Serial.println(timer_status_LED);
+  //Serial.println(hora_on);
+  //Serial.println(minuto_on);
   
   if (msg != NULL){
     
@@ -117,14 +119,31 @@ void callback(char* topic, byte* payload, unsigned int length)
     }
   } 
   
-  /*else if (msg.indexOf("timer/") != -1){
-    String val = getValue(msg, '/', 1);
+  if (timer_status_LED != NULL){
+    /*String val = getValue(msg, '/', 1);
     timerValue = val.toInt();
     Serial.println(val);
-    initTimer();
-  }*/ else if(led_status != NULL) {
+    initTimer();*/
+
+    if (timer_status_LED.equals("L")){
+      status_LED = LOW;  
+      digitalWrite(2, status_LED);  
+    } else if (timer_status_LED.equals("D")){
+      status_LED = HIGH;  
+      digitalWrite(2, status_LED);  
+    }
+  }
+  
+  if(led_status != NULL) {
     /*char* json = docs["state"]["desired"]["time"];*/
     Serial.println("Entrou");
+    Serial.println(led_status);
+    
+    if (led_status.equals("L")){
+      status_aux_LED = LOW;  
+    } else if (led_status.equals("D")){
+      status_aux_LED = HIGH;  
+    }
     
     /*String aux_hour = getValue(msg, '/', 1);
     String aux_minute = getValue(msg, '/', 2);
@@ -362,14 +381,18 @@ void loop() {
     Serial.print("Minuto ");
     Serial.println(minute);
 
+    Serial.print("Dia ");
+    Serial.println(daysOfTheWeek[ntpClient.getDay()]);
+    
     if(hour == hora_on && minute == minuto_on) {
-      Serial.println("Entrei no If de ligar a LED ");
-      status_LED = LOW;
+      Serial.println("Entrei no If ");
+      
+      status_LED = status_aux_LED;
       digitalWrite(2, status_LED);
-    } else if(hour == hora_off && minute == minuto_off) {
+    } /*else if(hour == hora_off && minute == minuto_off) {
       status_LED = HIGH;
       digitalWrite(2, status_LED);
-    }
+    }*/
     
     if(status_LED == LOW)
     {
