@@ -32,14 +32,13 @@ char msg[256];  //buffer para conter a mensagem a ser publicada
 DynamicJsonDocument doc(1024); // cria um documento do formato json
 int timeZone = -3;
 int tick = 0;
+int tack = 0;
 int timerValue = 1;
 int hour;
 int minute;
-int hora_on;
-int minuto_on;
-char daysOfTheWeek[7][12] = {"Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sabado"};
-
-
+int hora;
+int minuto;
+//char daysOfTheWeek[7][12] = {"domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"};
 
 //Socket UDP que a biblioteca utiliza para recuperar dados sobre o horário
 WiFiUDP ntpUDP;
@@ -60,7 +59,7 @@ int status_aux_LED = LOW;
 os_timer_t timer; // cria o temporizador
 bool tickTimer;
 
-String getValue(String data, char separator, int index)
+/*String getValue(String data, char separator, int index)
 {
     int found = 0;
     int strIndex[] = { 0, -1 };
@@ -74,7 +73,7 @@ String getValue(String data, char separator, int index)
         }
     }
     return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
-}
+}*/
 
 void callback(char* topic, byte* payload, unsigned int length) 
 {
@@ -91,7 +90,11 @@ void callback(char* topic, byte* payload, unsigned int length)
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
+  
+  //String teste = docs["state"]["desired"]["time"][0];
+  //Serial.print("Teste Hora: ");
 
+  //Serial.println(teste);
  /*for (int i = 0; i < length; i++) 
   {
     Serial.println((char)payload[i]);
@@ -100,19 +103,23 @@ void callback(char* topic, byte* payload, unsigned int length)
   }*/
   String msg = docs["state"]["desired"]["status_LED"]; 
   String led_status = docs["state"]["desired"]["time"][0]["status_LED"];
-  hora_on = docs["state"]["desired"]["time"][0]["hour"];
-  minuto_on = docs["state"]["desired"]["time"][0]["minute"];
+  hora = docs["state"]["desired"]["time"][0]["hour"];
+  minuto = docs["state"]["desired"]["time"][0]["minute"];
   String timer_status_LED = docs["state"]["desired"]["timer"]["status_LED"];
 
-  Serial.println(timer_status_LED);
-  Serial.println(hora_on);
-  Serial.println(minuto_on);
+  //String days = docs["state"]["desired"]["time"][3]["days"];
+
+  //Serial.println(timer_status_LED);
+  //Serial.println(hora_on);
+  //Serial.println(minuto_on);
+  //Serial.println(days); 
   
   if (msg != NULL){
     
     if (msg.equals("L")){
       status_LED = LOW;  
-      digitalWrite(2, status_LED);  
+      digitalWrite(2, status_LED); 
+      initTimer();  
     } else if (msg.equals("D")){
       status_LED = HIGH;  
       digitalWrite(2, status_LED);  
@@ -127,7 +134,8 @@ void callback(char* topic, byte* payload, unsigned int length)
 
     if (timer_status_LED.equals("L")){
       status_LED = LOW;  
-      digitalWrite(2, status_LED);  
+      digitalWrite(2, status_LED); 
+      initTimer(); 
     } else if (timer_status_LED.equals("D")){
       status_LED = HIGH;  
       digitalWrite(2, status_LED);  
@@ -140,10 +148,22 @@ void callback(char* topic, byte* payload, unsigned int length)
     Serial.println(led_status);
     
     if (led_status.equals("L")){
-      status_aux_LED = LOW;  
+      status_aux_LED = LOW; 
     } else if (led_status.equals("D")){
       status_aux_LED = HIGH;  
     }
+
+    File file2 = SPIFFS.open("/agenda.txt","w+"); 
+     
+     if(!file2){
+        Serial.println("Erro ao abrir arquivo!");
+     } else {
+        file2.println(status_aux_LED);
+        file2.println(hora);
+        file2.println(minuto);
+        Serial.println("gravou agenda");
+     }
+     file2.close();
     
     /*String aux_hour = getValue(msg, '/', 1);
     String aux_minute = getValue(msg, '/', 2);
@@ -244,7 +264,7 @@ void config_certify()
   espClient.setCACert(binaryCA, len);
 }
 
-void getDate()// Não está sendo usado ainda
+/*void getDate()// Não está sendo usado ainda
 {
     //Recupera os dados de data e horário usando o client NTP
     //String formattedTime = ntpClient.getFormattedTime();
@@ -262,20 +282,32 @@ void getDate()// Não está sendo usado ainda
     Serial.print("Horas: ");
     Serial.println(hour); 
     Serial.println(); 
-}
+}*/
 
 void timerCallback(void *timing){
   tick++;
   Serial.println(tick);
   
-  if(tick == timerValue && status_LED == HIGH){
-      status_LED = LOW;
-      digitalWrite(2, status_LED);
-      tick = 0;
-      os_timer_disarm(&timer);
-  } else if(tick == timerValue && status_LED == LOW){
-     status_LED = HIGH;
-     digitalWrite(2, status_LED);
+  if(status_LED == HIGH){
+     tack += tick;
+     /*File file = SPIFFS.open("/tack.txt","w+"); 
+     
+     if(!file){
+        Serial.println("Erro ao abrir arquivo!");
+     } else {
+        file.println(tack);
+        Serial.print("gravou estado: ");
+     }
+     file.close();*/
+     
+     doc.clear();
+     doc["state"]["reported"]["tempo_consumo"] = tack;
+     serializeJson(doc, msg);
+     Serial.print("Publish message: ");
+     Serial.println(msg);
+  
+     // publicar mensagens no tópico "outTopic"
+     client_pubsub.publish("$aws/things/NodeMCU/shadow/update", msg);
      tick = 0;
      os_timer_disarm(&timer);
   }
@@ -300,11 +332,12 @@ void setup()
   
   pinMode(2, OUTPUT);              
   digitalWrite(2, LOW);
+  initTimer();
   
   WiFi.begin(ssid, password); //Passa os parâmetros para a função que vai fazer a conexão com a rede sem fio
   delay(1000); // Intervalo de 1000 milisegundos
-  Serial.print("Conectando à "); // Escreve um texto na serial
-  Serial.println(ssid);
+  Serial.print("Conectando à rede Wifi"); // Escreve um texto na serial
+  //Serial.println(ssid);
   
   while (WiFi.status() != WL_CONNECTED)
   {
@@ -328,6 +361,37 @@ void setup()
 
 void reconnect() 
 {
+  int count_agenda = 0;
+  // Ler arquivo da agenda
+  File agenda = SPIFFS.open("/agenda.txt","r");
+  
+  if (!agenda) {
+    Serial.println("Erro ao abrir arquivo com o agendamento!");
+  }
+
+  String status_arquivo;
+  String hora_arquivo;
+  String minuto_arquivo;
+  
+  while (agenda.available()) {
+    if (count_agenda == 0)
+       status_arquivo = agenda.readStringUntil('\n'); //na primeira linha está o status da LED
+    else if (count_agenda == 1)
+       hora_arquivo = agenda.readStringUntil('\n'); //na segunda linha está a hora
+    else
+       minuto_arquivo = agenda.readStringUntil('\n'); //na terceira linha está o minuto
+    count_agenda++;
+  }
+  agenda.close();
+
+  status_arquivo.trim(); //remove \n do final da string lida do arquivo
+  hora_arquivo.trim();//remove \n do final da string lida do arquivo
+  minuto_arquivo.trim();//remove \n do final da string lida do arquivo
+  
+  status_aux_LED = status_arquivo.toInt(); //conversão de string para inteiro
+  hora = hora_arquivo.toInt(); //conversão de string para inteiro
+  minuto = minuto_arquivo.toInt(); //conversão de string para inteiro
+  
   // Loop até estarmos reconectados
   while (!client_pubsub.connected()) // Enquanto falhar a conexão
   {
@@ -375,24 +439,26 @@ void loop() {
     hour = ntpClient.getHours();
     minute = ntpClient.getMinutes();
     //crie a mensagem a ser enviada
-    Serial.print("Hora ");
-    Serial.println(hour);
+    String horas = (String)hour+":"+(String)minute;
+    Serial.print("Horas: ");
+    Serial.println(horas);
 
-    Serial.print("Minuto ");
-    Serial.println(minute);
-
-    Serial.print("Dia ");
-    Serial.println(daysOfTheWeek[ntpClient.getDay()]);
+    //Serial.print("Dia ");
+    //Serial.println(daysOfTheWeek[ntpClient.getDay()]);
     
-    if(hour == hora_on && minute == minuto_on) {
-      Serial.println("Entrei no If ");
+    if(hour == hora && minute == minuto) {
       
       status_LED = status_aux_LED;
       digitalWrite(2, status_LED);
+      if(status_LED == LOW) {
+        initTimer(); 
+      }
+      
     } /*else if(hour == hora_off && minute == minuto_off) {
       status_LED = HIGH;
       digitalWrite(2, status_LED);
     }*/
+    doc.clear();
     
     if(status_LED == LOW)
     {
