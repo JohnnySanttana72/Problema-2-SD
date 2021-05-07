@@ -1,41 +1,80 @@
-# Problema-2-SD
+# Automação residencial
 
-## Diretorios e Arquivos
+Esse projeto se trata de um protótipo de sistema que será embarcado no dispositivo microcontrolador para controle de acionamento de uma lâmpada.
 
-### 1 - Web
+## Começando
 
-Contém a página html que será usada para as operações que controlam a placa NodeMCU ESP8266.
+Para executar esse projeto em sua máquina basta clonar esse repositório usando o git-bash ou Github desktop ou simplismente baixando todo o projeto. 
 
-### 1 - libraries
 
-Contém as bibliotecas necessárias para executar o código no NodeMCU ESP8266.
+### Pré-requisitos
 
-#### 1.1 - NTPClient.zip
-	
-Usado para se conectar a um servidor de horário NTP para se mantenha sincronizado com o horário da rede.
+Alguns requitos são importantes para executar esse projeto em sua máquina:
 
-#### 1.2 - PubSubClient.rar
-É uma biblioteca de cliente para mensagens MQTT.
+#### Dispositivo
 
-### 2 - wifi 
+* Ter a placa microcontrolador NodeMCU ESP8266
 
-#### 2.1 - Diretório data
+#### Instalar Arduino IDE
 
-##### 2.1.1 - wifi_credential_example.txt
+* [Arduino IDE](https://www.arduino.cc/en/software) - IDE para compilar códigos que são embarcados em qualquer tipo de placa.
 
-É um arquivo para configuração das credenciais 'nome_rede_wifi' e 'senha_da_rede_wifi' da rede Wifi. O arquivo devera ser renomeado para 'wifi_credential.txt', para ser possível ser lido.
+#### Configuração da IDE
 
-#### 2.2 - certificates_example.h
+[Configurar IDE ](https://create.arduino.cc/projecthub/electropeak/getting-started-w-nodemcu-esp8266-on-arduino-ide-28184f) - Configuração da IDE para habilitar a programação para o NodeMCU.
 
-É um arquivo para configur os certificados gerados na Aws deverá ser renomeado para 'certificates.h'. O conteúdo dos certificados respectivos(Amazon root CA certificado, A chave privada do dispositivo, O certificao para o dispositivo) deverão ser atribuído as seguintes constates que estão no arquivo .h:
-	
-	- AWS_CERT_CA;
-	- AWS_KEY_PRIVATE;
-	- AWS_CERT_CRT.
+#### Bibliotecas
 
-#### 2.3 - wifi.ino
+As bibliotecas usadas estão em [libraries](https://github.com/JohnnySanttana72/Problema-2-SD/tree/main/libraries).
 
-É o código-fonte que será carregado no NodeMCU ESP8266 para o acionamento de uma LED usando o protocolo MQTT;
+#### Conta AWS
 
-Obs:. O endpoint para acesso a AWS IoT dentro do código-fonte deve ser definido. 
+* É necessário ter uma conta AWS para se ter acesso ao serviço AWS Iot core para a criação de uma "Coisa" na plataforma e ser possível utilizar o protocolo MQTT e também gerar os certificados que permitem a comunicação usando autenticação TLS. 
+
+#### Codificar Certificados
+
+* Para executar o protótipo é preciso codificar os certificados gerados na Aws no arquivo [certificates_example.h](https://github.com/JohnnySanttana72/Problema-2-SD/blob/main/wifi/certificates_example.h) que deverá ser renomeado **certificates.h**.
+
+* Formato do **certificates.h**
+
+```
+// Amazon root CA certificado.
+const String AWS_CERT_CA =\
+//-----BEGIN CERTIFICATE-----
+"MIIDQTChkiG9w0CAimfz5m/jAo5gAwIBBgkqBAkPmljZbyjQsAgITBmy4vB4iANF" \
+"ADA5MGQW1hem5sGQW1hemDVVUzEMQxBBDVhMQsYDVQQQGEwJQDExBBbWF6" \
+"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+//-----END CERTIFICATE-----
+
+// A chave privada do dispositivo.
+const String AWS_KEY_PRIVATE =\
+//-----BEGIN RSA PRIVATE KEY-----
+"MIIEpQIQEAphsi45x87olzmdBqAOrHfZCADpJvguBAAKCZQDmHuAsjyoXwRxu9Xw" \
+"Ywi735aadERdTgZL84y5cgvgoBsi+tKbmi2Atu9XzQb956B7kf51X0goBGNO4oeA" \
+"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+//-----END RSA PRIVATE KEY-----
+
+// O certificao para o dispositivo
+const String AWS_CERT_CRT = 
+//-----BEGIN CERTIFICATE-----
+"MIIDwWH8yD0aOIBAgIUPCdJZxYDQYJKoZIhvcVfWTCCAkGgA65JHHAIAQEPMYwNL" \
+"BQAwAdlYiBTZX2aWN1hFtYXpJ1UECcyBPTTFLMem9uIFEkGwxCQWvbi5lPUjb20g" \
+"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+//-----END CERTIFICATE-----
+```
+
+## Executar
+
+* Conectar o placa NodeMCU na porta USB;
+
+* Compilar e carregar o código-executável na placa usando a IDE Arduino;
+
+## Autores
+
+* **Patrícia Carmona** - [carmonapat](https://github.com/carmonapat)
+* **Johnny da Silva** - *Initial work* - [JohnnySanttana72](https://github.com/JohnnySanttana72)
+* **Rafael Brito** - [rafabrito](https://github.com/rafabrito)
+
+Veja a lista de [contribuidores](https://github.com/JohnnySanttana72/Problema-2-SD/graphs/contributors) que participaram deste projeto.
+
 
