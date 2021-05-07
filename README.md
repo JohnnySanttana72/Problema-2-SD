@@ -25,15 +25,23 @@ Alguns requitos são importantes para executar esse projeto em sua máquina:
 
 #### Bibliotecas
 
-As bibliotecas usadas estão em [libraries](https://github.com/JohnnySanttana72/Problema-2-SD/tree/main/libraries).
+As bibliotecas usadas estão em [libraries](https://github.com/JohnnySanttana72/automacao-resencial/tree/main/libraries).
 
 #### Conta AWS
 
-* É necessário ter uma conta AWS para se ter acesso ao serviço AWS Iot core para a criação de uma "Coisa" na plataforma e ser possível utilizar o protocolo MQTT e também gerar os certificados que permitem a comunicação usando autenticação TLS. 
+* É necessário ter uma conta AWS para se ter acesso ao serviço AWS Iot core para a criação de uma "Coisa" na plataforma e ser possível utilizar o protocolo MQTT e também gerar os certificados que permitem a comunicação usando autenticação TLS.
+
+#### Configurar credências da rede Wifi
+* Renomear o arquivo [wifi_credential_example.txt](https://github.com/JohnnySanttana72/automacao-resencial/tree/main/wifi/data) para **wifi_credential.txt**;
+* Inserir as credenciais no arquivo:
+	```
+	rede_wifi
+	senha_da_rede_wifi
+	```
 
 #### Codificar Certificados
 
-* Para executar o protótipo é preciso codificar os certificados gerados na Aws no arquivo [certificates_example.h](https://github.com/JohnnySanttana72/Problema-2-SD/blob/main/wifi/certificates_example.h) que deverá ser renomeado **certificates.h**.
+* Para executar o protótipo é preciso codificar os certificados gerados na Aws no arquivo [certificates_example.h](https://github.com/JohnnySanttana72/automacao-resencial/blob/main/wifi/certificates_example.h) que deverá ser renomeado **certificates.h**.
 
 * Formato do **certificates.h**
 
@@ -75,6 +83,6 @@ const String AWS_CERT_CRT =
 * **Johnny da Silva** - *Initial work* - [JohnnySanttana72](https://github.com/JohnnySanttana72)
 * **Rafael Brito** - [rafabrito](https://github.com/rafabrito)
 
-Veja a lista de [contribuidores](https://github.com/JohnnySanttana72/Problema-2-SD/graphs/contributors) que participaram deste projeto.
+Veja a lista de [contribuidores](https://github.com/JohnnySanttana72/automacao-resencial/graphs/contributors) que participaram deste projeto.
 
 
